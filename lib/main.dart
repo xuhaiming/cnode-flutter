@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import './common/AppLayout.dart';
 import './pages/RootPage.dart';
-
 
 void main() {
   runApp(CNodeApp());
@@ -10,8 +8,14 @@ void main() {
 class CNodeApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return AppLayout(
-      child: RootPage(),
+    return MaterialApp(
+      title: 'CNode',
+      theme: ThemeData(
+        brightness: Brightness.light,
+        primaryColor: Colors.grey[900],
+        accentColor: Colors.cyan[600],
+      ),
+      home: RootPage(),
     );
   }
 }
