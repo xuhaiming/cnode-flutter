@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+
+import '../reducer/StoreData.dart';
 
 class AppLayout extends StatelessWidget {
   AppLayout({
@@ -45,16 +48,29 @@ class AppLayout extends StatelessWidget {
           padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
-              child: Text('Drawer Header', style: TextStyle(
-                color: Colors.white,
-              )),
+              child: StoreConnector<StoreData, String>(
+                converter: (store) => store.state.title,
+                builder: (context, title) {
+                  return Text(title, style: TextStyle(
+                    color: Colors.white,
+                  ));
+                },
+              ),
               decoration: BoxDecoration(
                 color: Colors.grey[800],
               ),
             ),
-            ListTile(
-              title: Text('Item 1'),
-              onTap: () {
+            StoreConnector<StoreData, VoidCallback>(
+              converter: (store) {
+                return () => store.dispatch(Actions.SetTitle);
+              },
+              builder: (context, callback) {
+                return ListTile(
+                  title: Text('Item 1'),
+                  onTap: () {
+                    callback();
+                  },
+                );
               },
             ),
             ListTile(
